@@ -1,0 +1,30 @@
+{
+  "name": "Ujumla",
+  "version": "0.0.1",
+  "auth": "github:jonathanstowe",
+  "api" : "1.0",
+  "description": "Read Config::General/Apache style configuration",
+  "source-url": "https://github.com/jonathanstowe/Ujumla.git",
+  "tags": [
+	"config",
+    "Config::General",
+    "apache"
+  ],
+  "license": "Artistic-2.0",
+  "provides": {
+	"Ujumla" : "lib/Ujumla.pm"
+  },
+  "depends": [ ],
+  "test-depends": [ ],
+  "build-depends": [ ],
+  "support": {
+    "source": "https://github.com/jonathanstowe/Ujumla.git",
+    "email": "jns+gh@gellyfish.co.uk"
+  },
+  "perl": "6.*",
+  "authors": [
+    "Jonathan Stowe <jns+gh@gellyfish.co.uk>"
+  ],
+  "resources": [ ],
+  "meta-version": "0"
+}
