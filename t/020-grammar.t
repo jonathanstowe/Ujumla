@@ -84,6 +84,11 @@ for @tests -> $test {
     }, $test<description>;
 }
 
+$cfg = $*PROGRAM.parent.add('data/example.cfg').slurp;
+
+todo "can't quite parse everything";
+ok Ujumla::Grammar.parse($cfg), "parse example";
+
 
 done-testing;
 # vim: expandtab shiftwidth=4 ft=perl6

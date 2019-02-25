@@ -1,15 +1,20 @@
 use v6;
 
+no precompilation;
+use Grammar::Tracer;
 class Ujumla {
     grammar Grammar {
         rule TOP {
             <config-content>
         }
         rule  config-content {
-            [ | <config-line> | <config-section> | <.comment> ]+
+            [ | <config-line> | <config-section> | <.comment> | <.empty-or-blank>  ]+
         }
         token name { \w+ }
         token quote { <['"]> }
+        rule empty-or-blank { [ <blank-line> | <empty-line> ] }
+        rule blank-line { ^^\h*$$ }
+        rule empty-line { ^^$$ }
         rule  value { <simple-value> | <here-doc> }
         token simple-value { \N* }
         rule here-doc {
@@ -25,7 +30,7 @@ class Ujumla {
             .*?
             <c-comment-end>
         }
-        rule shell-comment { ^^ \s* '#' \N*    }
+        rule shell-comment { ^^ \h* '#' \N* }
         rule config-line {
             <name><.separator><value>
         }
@@ -41,6 +46,9 @@ class Ujumla {
                <config-content>*
             '</' $<name> '>'
         }
+    }
+
+    class Actions {
     }
 }
 # vim: expandtab shiftwidth=4 ft=perl6
