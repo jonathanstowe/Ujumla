@@ -30,7 +30,7 @@ class Ujumla {
             .*?
             <c-comment-end>
         }
-        rule shell-comment { ^^ \h* '#' \N* }
+        rule shell-comment { ^^ \h* <!after '\\'>'#' \N* }
         rule config-line {
             <name><.separator><value>
         }
@@ -40,7 +40,7 @@ class Ujumla {
         token space { \s+ }
         token equals { \s* '=' \s* }
         rule config-section {
-            '<' 
+            '<'
                <name> <simple-value>?
             '>'
                <config-content>*
