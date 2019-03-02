@@ -47,6 +47,8 @@ Assuming you have a working Rakudo Perl 6 compiler you should be able to install
 
 ## Support
 
+This doesn't work right now please ignore it
+
 If you have any suggestions, complaints or patches please direct them to [Github](https://github.com/jonathanstowe/Ujumla/issues)
 
 The chances are that this won't parse every conceivable configuration file, so if you find something that
