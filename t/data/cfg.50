@@ -1,0 +1,6 @@
+# named blocks can also be used
+<area santa-barbara>
+  # block names containing whitespaces must be quoted
+  <"kyla cole">
+  </"kyla cole">
+</area>
