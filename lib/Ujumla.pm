@@ -1,22 +1,31 @@
 use v6;
 
 no precompilation;
-use Grammar::Tracer;
+#use Grammar::Tracer;
 class Ujumla {
     grammar Grammar {
         rule TOP {
             <config-content>
         }
         rule  config-content {
-            [ | <config-line> | <config-section> | <.comment> | <.empty-or-blank>  ]+
+            [ | <config-line> | <config-section> | <include> | <.comment> | <.empty-or-blank>  ]+
         }
-        token name { \w+ }
+        token name { <[\S] - [/<>]>+ }
         token quote { <['"]> }
+        token include-name {
+            <[\S] - [>]>+
+        }
+        rule include {
+            '<<'<[Ii]>nclude\h+<include-name>'>>'
+        }
         rule empty-or-blank { [ <blank-line> | <empty-line> ] }
         rule blank-line { ^^\h*$$ }
         rule empty-line { ^^$$ }
         rule  value { <simple-value> | <here-doc> }
-        token simple-value { \N* }
+        token simple-value { [ \N | <.quoted-line-break> ]* }
+        regex quoted-line-break {
+            '\\'\n
+        }
         rule here-doc {
             '<<'<name>
             $<value>=[.*?]
@@ -39,12 +48,18 @@ class Ujumla {
         }
         token space { \s+ }
         token equals { \s* '=' \s* }
+        token not-ge {
+            <-[>]>
+        }
+        token section-name {
+            [ <.quote><not-ge>*<.quote> | <[\S] - [>]>+ ]
+        }
         rule config-section {
             '<'
-               <name> <simple-value>?
+               <name> <section-name>?
             '>'
                <config-content>*
-            '</' $<name> '>'
+            '</' :i $<name> '>'
         }
     }
 
