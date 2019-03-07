@@ -1,7 +1,7 @@
 use v6;
 
 no precompilation;
-#use Grammar::Tracer;
+use Grammar::Tracer;
 class Ujumla {
     grammar Grammar {
         rule TOP {
@@ -22,8 +22,8 @@ class Ujumla {
         rule empty-or-blank { [ <blank-line> | <empty-line> ] }
         rule blank-line { ^^\h*$$ }
         rule empty-line { ^^$$ }
-        rule  value { <env-replace> | <simple-value> | <here-doc> }
-        token simple-value { [ \N | <.quoted-line-break> ]* }
+        rule  value { <simple-value> | <here-doc> }
+        token simple-value { <!after '<<'>[ \N | <.quoted-line-break> ]* }
         rule env-replace { '__env('\h*<env-name>\h*','\h*<simple-value>\h*')__' }
         regex quoted-line-break {
             '\\'\n
@@ -48,8 +48,8 @@ class Ujumla {
         token separator {
             <space>|<equals>
         }
-        token space { \s+ }
-        token equals { \s* '=' \s* }
+        token space { \h+ }
+        token equals { \h* '=' \h* }
         token not-ge {
             <-[>]>
         }

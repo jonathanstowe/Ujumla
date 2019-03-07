@@ -68,10 +68,10 @@ my @tests = (
     },
     {
         description => "here-doc",
-        config => "foo <<EOF\nbar\nEOF",
+        config => "foo <<EOF\nbar\nEOF\n",
         expect => {
             name    => "foo",
-            value   => "<<EOF\nbar\nEOF",
+            value   => "<<EOF\nbar\nEOF\n",
         }
     },
 );
