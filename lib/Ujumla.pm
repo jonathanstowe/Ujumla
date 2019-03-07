@@ -10,7 +10,7 @@ class Ujumla {
         rule  config-content {
             [ | <config-line> | <config-section> | <include> | <.comment> | <.empty-or-blank>  ]+
         }
-        token name { <[\S] - [/<>]>+ }
+        token name { <[\S] - [/<>=]>+ }
         token quote { <['"]> }
         token env-name { <alpha>+ }
         token include-name {
