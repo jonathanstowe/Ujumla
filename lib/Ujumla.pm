@@ -12,7 +12,7 @@ class Ujumla {
         }
         token name { <[\S] - [/<>=]>+ }
         token quote { <['"]> }
-        token env-name { <alpha>+ }
+        token env-name { <.alpha>+ }
         token include-name {
             <[\S] - [>]>+
         }
@@ -22,9 +22,10 @@ class Ujumla {
         rule empty-or-blank { [ <blank-line> | <empty-line> ] }
         rule blank-line { ^^\h*$$ }
         rule empty-line { ^^$$ }
-        rule  value { <simple-value> | <here-doc> }
-        token simple-value { <!after '<<'>[ \N | <.quoted-line-break> ]* }
-        rule env-replace { '__env('\h*<env-name>\h*','\h*<simple-value>\h*')__' }
+        rule  value { <env-replace> | <simple-value> | <here-doc> }
+        token simple-value { <!after ['<<'|'__']>[ \N | <.quoted-line-break> ]* }
+        token replace-value { <[\N] - [)]>* }
+        regex env-replace { '__env('\h*<env-name>\h*','\h*<replace-value>\h*')__' }
         regex quoted-line-break {
             '\\'\n
         }
