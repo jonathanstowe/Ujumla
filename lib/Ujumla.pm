@@ -84,7 +84,34 @@ class Ujumla {
         has    $.config;
 
         method config-line( $/ ) {
+            say ">>" ~ $/<name>.made => $/<value>.made;
+        }
 
+        method name( $/ ) {
+            $/.make: ~$/;
+        }
+
+        method value($/) {
+            $/.make: $/<env-replace>.made // $/<simple-value>.made // $/<here-doc>.made;
+        }
+
+        method simple-value($/) {
+            $/.make: ~$/;
+
+        }
+
+        method env-name($/) {
+            $/.make: ~$/;
+        }
+
+        method replace-value($/) {
+            $/.make: ~$/;
+        }
+
+        method env-replace($/) {
+            $/.make: do {
+                %*ENV{$/<env-name>.made} // $/<replace-value>.made
+            }
         }
     }
 }
