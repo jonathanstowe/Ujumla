@@ -1,16 +1,29 @@
 use v6;
 
-no precompilation;
-use Grammar::Tracer;
+#no precompilation;
+#use Grammar::Tracer::Compact;
+
 class Ujumla {
+
+    subset Filename of Str where { $_.IO.f };
+
+    has Filename $.config-file;
+
+    has Str $.config-text;
+
+    method config-text( --> Str ) {
+        $!config-text //= $!config-file.IO.slurp;
+    }
+
     grammar Grammar {
         rule TOP {
             <config-content>
         }
         rule  config-content {
-            [ | <config-line> | <config-section> | <include> | <.comment> | <.empty-or-blank>  ]+
+            [ | <comment> | <config-line> | <config-section> | <include> | <.empty-or-blank>  ]+
         }
-        token name { <[\S] - [/<>=]>+ }
+        token name { <[\S] - [<>=]>+ }
+        token section-name { <[\S] - [/<>=]>+ }
         token quote { <['"]> }
         token env-name { <.alpha>+ }
         token include-name {
@@ -54,19 +67,25 @@ class Ujumla {
         token not-ge {
             <-[>]>
         }
-        token section-name {
+        token sub-section-name {
             [ <.quote><not-ge>*<.quote> | <[\S] - [>]>+ ]
         }
         rule config-section {
             '<'
-               <name> <section-name>?
+               <section-name> <sub-section-name>?
             '>'
                <config-content>*
-            '</' :i $<name> '>'
+            '</' :i $<section-name> '>'
         }
     }
 
     class Actions {
+        has IO $.input-file;
+        has    $.config;
+
+        method config-line( $/ ) {
+
+        }
     }
 }
 # vim: expandtab shiftwidth=4 ft=perl6
