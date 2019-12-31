@@ -1,6 +1,6 @@
 # Ujumla
 
-Read Apache/Config-General config files in #perl6
+Read Apache/Config-General config files in Raku
 
 ## Synopsis
 
@@ -36,7 +36,7 @@ the first search result for *"Swahili for General"*.
 
 ## Installation
 
-Assuming you have a working Rakudo Perl 6 compiler you should be able to install this with *zef* :
+Assuming you have a working Rakudo compiler you should be able to install this with *zef* :
 
     zef install Ujumla
 
