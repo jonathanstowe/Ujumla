@@ -83,8 +83,21 @@ class Ujumla {
         has IO $.input-file;
         has    $.config;
 
+        method TOP( $/ ) {
+            my %config = $/<config-content>.made;
+            $/.make: %config;
+        }
+
+        method config-content($/) {
+            $/.make: %( |$/<config-line>».?made, |$/<config-section>».?made);
+        }
         method config-line( $/ ) {
-            say ">>" ~ $/<name>.made => $/<value>.made;
+            $/.make: $/<name>.made => $/<value>.made;
+        }
+
+        method config-section( $/ ) {
+            $/.make: $/<section-name> =>  $/<config-content>».made.hash;
+
         }
 
         method name( $/ ) {
