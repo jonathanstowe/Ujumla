@@ -8,10 +8,10 @@ pr=$me/blubber
 
 base = /opt
 <etc>
-  base = /usr        # set $base to a new value in this scope
-  log  = ${base}/log/logfile  # use braces
+  base = /usr
+  log  = ${base}/log/logfile
   <users>
-    home = $base/home/max # $base should be /usr, not /opt !
+    home = $base/home/max
   </users>
 </etc>
 

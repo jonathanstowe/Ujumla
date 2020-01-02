@@ -6,9 +6,9 @@ use Test;
 
 use Ujumla;
 
-todo("not working yet");
+
 lives-ok {
-    my $config = Ujumla.new( config => q:to/EIEIO/);
+    my $config = Ujumla.new( config-text => q:to/EIEIO/);
     # Some comment
     name "something or other"
     <Section>
@@ -16,9 +16,9 @@ lives-ok {
     </Section>
     EIEIO
 
-    is $config.get-item('name'), "something or other";
-    is $config.get-item('Section', 'section-name'), 'whatever';
-}, "parse and retrieve config";
+    is $config.get-item('name'), "something or other", 'got item in top level';
+    is $config.get-item('Section', 'section-name'), 'whatever', 'got item in section';
+}, "simple config";
 
 
 
