@@ -24,6 +24,8 @@ class Ujumla {
         has %.items;
         has Section @.sections;
 
+        proto method get-item(|c) { * }
+
         multi method get-item(Str:D $key --> Str ) {
             %!items{$key} // Str;
         }
@@ -36,12 +38,27 @@ class Ujumla {
             $item // Str;
         }
 
-        method get-section(Str:D $section) {
-            my @sections = |@!sections.grep(*.name eq $section);
+        proto method get-section(|c) { * }
+
+        multi method get-section(Str:D $section) {
+            my @sections = @!sections.grep(*.name eq $section);
             if @sections.elems > 1 {
                 warn "there are more than one sections named '$section'";
             }
             @sections[0];
+        }
+
+        multi method get-section(Str:D $section, Str:D $sub-section ) {
+            my @sections = @!sections.grep({ $_.name eq $section && $_.sub-section.defined && $_.sub-section eq $sub-section });
+            if @sections.elems > 1 {
+                warn "there are more than one sections named '$section' with sub-section '$sub-section'";
+            }
+            @sections[0];
+        }
+
+        method get-sections(Str:D $section) {
+            my @sections = @!sections.grep(*.name eq $section);
+            @sections;
         }
     }
 
@@ -204,7 +221,7 @@ class Ujumla {
 
     has Config $.config;
 
-    method config(--> Config) handles <get-item get-section> {
+    method config(--> Config) handles <get-item get-section get-sections> {
         $!config //= do {
             Grammar.parse(self.config-text, actions => Actions.new).?made;
         }

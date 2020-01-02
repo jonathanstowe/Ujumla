@@ -15,6 +15,14 @@ base = /opt
   </users>
 </etc>
 
+# test scoping
+<zub>
+  log  = ${base}/log/logfile
+  <users>
+    home = $base/home/max
+  </users>
+</zub>
+
 # block(name) test
 tag  = dir
 mono = teri
