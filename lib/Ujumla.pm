@@ -1,7 +1,7 @@
 use v6;
 
-#no precompilation;
-#use Grammar::Tracer::Compact;
+# no precompilation;
+# use Grammar::Tracer::Compact;
 
 class Ujumla {
 
@@ -83,15 +83,16 @@ class Ujumla {
         rule blank-line { ^^\h*$$ }
         rule empty-line { ^^$$ }
         rule  value { <env-replace> | <simple-value> | <here-doc> }
-        token simple-value { <!after ['<<'|'__']>[ \N | <.quoted-line-break> ]* }
+        token simple-value { <!after ['<<'|'__']><!start-here-doc>[ \N | <.quoted-line-break> ]* }
         token replace-value { <[\N] - [)]>* }
         regex env-replace { '__env('\h*<env-name>\h*','\h*<replace-value>\h*')__' }
         regex quoted-line-break {
             '\\'\n
         }
+        token start-here-doc { '<<' }
         rule here-doc {
-            '<<'<name>
-            $<value>=[.*?]
+            <start-here-doc><name>
+            $<here-doc-value>=[.*?]
             $<name>
         }
         rule  comment { <shell-comment> | <c-comment> }
@@ -102,12 +103,12 @@ class Ujumla {
             .*?
             <c-comment-end>
         }
-        rule shell-comment { ^^ \h* <!after '\\'>'#' \N* }
+        regex shell-comment { ^^ \h* <!after '\\'>'#' \N* }
         rule config-line {
             <name><.separator><value>
         }
         token separator {
-            <space>|<equals>
+            <equals> | <space>
         }
         token space { \h+ }
         token equals { \h* '=' \h* }
@@ -196,6 +197,10 @@ class Ujumla {
 
         method value($/) {
             $/.make: self.dequote(self.expand($/<env-replace>.made // $/<simple-value>.made // $/<here-doc>.made));
+        }
+
+        method here-doc( $/ ) {
+            $/.make: ~$/<here-doc-value>;
         }
 
         method simple-value($/) {
