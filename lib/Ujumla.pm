@@ -5,14 +5,68 @@ use v6;
 
 class Ujumla {
 
+    class X::Ujumla::NoFile is Exception {
+        has Str $.file-name is required;
+        method message( --> Str ) {
+            "File '{ $!file-name }' cannot be found";
+        }
+    }
+
+    class FileHelper {
+        #| This is the user-visible path
+        has Str @.search-path;
+
+        has IO::Path @.full-search-path;
+
+        method full-search-path() {
+            if not @!full-search-path.elems {
+                @!full-search-path = ($*CWD, |@!search-path, |(%*ENV<UJUMLA_PATH> ?? %*ENV<UJUMLA_PATH>.split(":") !! ())).map(*.IO);
+            }
+            @!full-search-path;
+        }
+
+        method resolve-file(Str() $file-name --> IO::Path) {
+            my IO::Path $file;
+
+            if $file-name.IO.is-absolute && $file-name.IO.f {
+                $file = $file-name.IO;
+            }
+            else {
+                for @.full-search-path.map(-> $v { $v.add($file-name) }) -> $try-file {
+                    if $try-file.f {
+                        $file = $try-file;
+                    }
+                }
+            }
+            $file;
+        }
+
+        method get-config-text(Str:D $file-name --> Str ) {
+            if self.resolve-file($file-name) -> $file {
+                $file.slurp;
+            }
+            else {
+                X::Ujumla::NoFile.new(:$file-name).throw;
+            }
+        }
+    }
+
     subset Filename of Str where { $_.IO.f };
 
-    has Filename $.config-file;
+    has Str $.config-file;
 
     has Str $.config-text;
 
+    has Str @.search-path;
+
+    has FileHelper $.file-helper;
+
+    method file-helper( --> FileHelper ) handles <get-config-text> {
+        $!file-helper //= FileHelper.new(:@!search-path);
+    }
+
     method config-text( --> Str ) {
-        $!config-text //= $!config-file.IO.slurp;
+        $!config-text //= self.get-config-text($!config-file);
     }
 
     role Section[ :$name, :$sub-section ] {
@@ -59,6 +113,14 @@ class Ujumla {
         method get-sections(Str:D $section) {
             my @sections = @!sections.grep(*.name eq $section);
             @sections;
+        }
+
+        method merge(Config:D $other-config) {
+            @!sections.append: $other-config.sections;
+
+            for $other-config.items.kv -> $k, $v {
+                %!items{$k} = $v;
+            }
         }
     }
 
@@ -128,8 +190,8 @@ class Ujumla {
     }
 
     class Actions {
-        has IO $.input-file;
-        has    $.config;
+
+        has FileHelper $.file-helper is required handles <get-config-text>;
 
         has @!replace-stack = ( {}, );
 
@@ -168,11 +230,15 @@ class Ujumla {
         }
 
         method TOP( $/ ) {
-            $/.make: $/<config-content>.made; 
+            $/.make: $/<config-content>.made;
         }
 
         method config-content($/) {
-            $/.make: Config.new( items => ($/<config-line>».made).hash, sections => $/<config-section>».?made);
+            my $config = Config.new( items => ($/<config-line>».made).hash, sections => $/<config-section>».?made);
+            for $/<include> -> $i {
+                $config.merge($i.?made);
+            }
+            $/.make: $config;
         }
         method config-line( $/ ) {
             $/.make: $/<name>.made => $/<value>.made;
@@ -222,13 +288,21 @@ class Ujumla {
             }
         }
 
+        method include($match) {
+            $match.make: Grammar.parse(self.get-config-text($match<include-name>.made), actions => self).?made;
+        }
+
+        method include-name($/) {
+            $/.make: $/.Str;
+        }
+
     }
 
     has Config $.config;
 
     method config(--> Config) handles <get-item get-section get-sections> {
         $!config //= do {
-            Grammar.parse(self.config-text, actions => Actions.new).?made;
+            Grammar.parse(self.config-text, actions => Actions.new(file-helper => self.file-helper)).?made;
         }
     }
 }
