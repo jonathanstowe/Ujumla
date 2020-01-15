@@ -236,7 +236,12 @@ class Ujumla {
         method config-content($/) {
             my $config = Config.new( items => ($/<config-line>».made).hash, sections => $/<config-section>».?made);
             for $/<include> -> $i {
-                $config.merge($i.?made);
+                if $i.?made -> $inc {
+                    $config.merge($inc);
+                }
+                else {
+                    note "failed to parse included file '{ $i<include-name> }'";
+                }
             }
             $/.make: $config;
         }
