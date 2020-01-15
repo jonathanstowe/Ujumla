@@ -8,7 +8,7 @@ Read Apache/Config-General config files in Raku
 
 use Ujumla;
 
-my $config = Ujumla.new( config => q:to/EIEIO/);
+my $config = Ujumla.new( config-text => q:to/EIEIO/);
 # Some comment
 name "something or other"
 <Section>
