@@ -1,7 +1,7 @@
 use v6;
 
 # no precompilation;
-# use Grammar::Tracer::Compact;
+#use Grammar::Tracer::Compact;
 
 class Ujumla {
 
@@ -129,7 +129,7 @@ class Ujumla {
             <config-content>
         }
         rule  config-content {
-            [ | <comment> | <config-line> | <config-section> | <include> | <.empty-or-blank>  ]+
+            [ <.comment> || <config-line> || <config-section> || <include> || <.empty-or-blank>  ]+
         }
         token name { <[\S] - [<>=]>+ }
         token section-name { <[\S] - [/<>=]>+ }
@@ -157,7 +157,7 @@ class Ujumla {
             $<here-doc-value>=[.*?]
             $<name>
         }
-        rule  comment { <shell-comment> | <c-comment> }
+        rule  comment { <empty-comment> | <shell-comment> | <c-comment> }
         token c-comment-start { '/*' }
         token c-comment-end   { '*/' }
         rule c-comment {
@@ -165,9 +165,10 @@ class Ujumla {
             .*?
             <c-comment-end>
         }
-        regex shell-comment { ^^ \h* <!after '\\'>'#' \N* }
+        regex shell-comment { \h*'#'\N* }
+        regex empty-comment { ^^\h*'#'\h*$$ }
         rule config-line {
-            <name><.separator><value>
+            \h*<name><.separator><value>
         }
         token separator {
             <equals> | <space>
