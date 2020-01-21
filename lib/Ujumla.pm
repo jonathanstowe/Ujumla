@@ -61,6 +61,10 @@ class Ujumla {
 
     has FileHelper $.file-helper;
 
+    has %.initial-variables;
+
+    has Bool $.include-env = False;
+
     method file-helper( --> FileHelper ) handles <get-config-text> {
         $!file-helper //= FileHelper.new(:@!search-path);
     }
@@ -145,7 +149,7 @@ class Ujumla {
         rule blank-line { ^^\h*$$ }
         rule empty-line { ^^$$ }
         rule  value { <env-replace> | <simple-value> | <here-doc> }
-        token simple-value { <!after ['<<'|'__']><!start-here-doc>[ \N | <.quoted-line-break> ]* }
+        token simple-value { <!after ['<<'|'__']><!start-here-doc>[ \N | <.quoted-line-break> ]*<!shell-comment>  }
         token replace-value { <[\N] - [)]>* }
         regex env-replace { '__env('\h*<env-name>\h*','\h*<replace-value>\h*')__' }
         regex quoted-line-break {
@@ -168,7 +172,7 @@ class Ujumla {
         regex shell-comment { \h*'#'\N* }
         regex empty-comment { ^^\h*'#'\h*$$ }
         rule config-line {
-            \h*<name><.separator><value>
+            \h*<name><.separator><value> <shell-comment>?
         }
         token separator {
             <equals> | <space>
@@ -194,7 +198,16 @@ class Ujumla {
 
         has FileHelper $.file-helper is required handles <get-config-text>;
 
+        has %.initial-variables;
+
+        has Bool $.include-env = False;
+
         has @!replace-stack = ( {}, );
+
+        submethod TWEAK {
+            my %vars = (|( $!include-env ?? %*ENV !! {} ), |%!initial-variables);
+            @!replace-stack = ( %vars, );
+        }
 
         method current( --> Hash ) {
             @!replace-stack.tail;
@@ -227,7 +240,7 @@ class Ujumla {
         }
 
         method dequote( Str $str --> Str ) {
-            $str.subst(/^$<quote>=<['"]>?$<value>=[.*]$<quote>$/, { $<value> });
+            $str.subst(/<Grammar::shell-comment>/, '').subst(/^$<quote>=<['"]>?$<value>=[.*]$<quote>$/, { $<value> });
         }
 
         method TOP( $/ ) {
@@ -304,11 +317,17 @@ class Ujumla {
 
     }
 
+    has Actions $.actions;
+
+    method actions( --> Actions ) {
+        $!actions //= Actions.new(file-helper => self.file-helper, :%!initial-variables, :$!include-env);
+    }
+
     has Config $.config;
 
     method config(--> Config) handles <get-item get-section get-sections> {
         $!config //= do {
-            Grammar.parse(self.config-text, actions => Actions.new(file-helper => self.file-helper)).?made;
+            Grammar.parse(self.config-text, actions => self.actions).?made;
         }
     }
 }
