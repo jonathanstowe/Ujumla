@@ -33,6 +33,8 @@ be able to do better and because I don't want to raise the expectation that this
 module - the interface and options are likely to differ wildly from that module.  It is instead named for
 the first search result for *"Swahili for General"*.
 
+You can find the fuller documentation [here](Documentation.md).
+
 
 ## Installation
 
@@ -58,4 +60,3 @@ you think it should parse but doesn't a failing test case would be much apprecia
 This is free software please see the [LICENCE](LICENCE) file.
 
 © Jonathan Stowe 2020
-
