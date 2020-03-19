@@ -1,0 +1,202 @@
+{
+  "type": "layout",
+  "children": [
+    {
+      "type": "directory",
+      "purpose": null,
+      "name": "t",
+      "children": [
+        {
+          "name": "data",
+          "children": [
+            {
+              "name": "cfg.4",
+              "type": "file"
+            },
+            {
+              "name": "cfg.7",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.40"
+            },
+            {
+              "type": "file",
+              "name": "cfg.51"
+            },
+            {
+              "name": "cfg.46",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.39"
+            },
+            {
+              "name": "example.cfg",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.2"
+            },
+            {
+              "name": "cfg.5",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.6"
+            },
+            {
+              "type": "file",
+              "name": "cfg.3"
+            },
+            {
+              "type": "file",
+              "name": "cfg.55"
+            },
+            {
+              "type": "file",
+              "name": "cfg.16a"
+            },
+            {
+              "name": "cfg.43",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.58"
+            },
+            {
+              "type": "file",
+              "name": "cfg.34"
+            },
+            {
+              "name": "cfg.42",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.17"
+            },
+            {
+              "type": "file",
+              "name": "cfg.16"
+            },
+            {
+              "type": "file",
+              "name": "cfg.20.b"
+            },
+            {
+              "name": "cfg.8",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "include.cfg"
+            },
+            {
+              "type": "file",
+              "name": "cfg.20.a"
+            },
+            {
+              "name": "include-1.cfg",
+              "type": "file"
+            },
+            {
+              "name": "cfg.50",
+              "type": "file"
+            },
+            {
+              "name": "cfg.45",
+              "type": "file"
+            },
+            {
+              "type": "file",
+              "name": "cfg.60"
+            },
+            {
+              "type": "file",
+              "name": "cfg.19"
+            },
+            {
+              "type": "file",
+              "name": "cfg.41"
+            },
+            {
+              "name": "cfg.20.c",
+              "type": "file"
+            }
+          ],
+          "purpose": null,
+          "type": "directory"
+        },
+        {
+          "name": "030-synopsis.t",
+          "type": "file"
+        },
+        {
+          "name": "040-grammar-simple-config.t",
+          "type": "file"
+        },
+        {
+          "type": "file",
+          "name": "080-include.t"
+        },
+        {
+          "name": "010-meta.t",
+          "type": "file"
+        },
+        {
+          "type": "file",
+          "name": "050-individual.t"
+        },
+        {
+          "type": "file",
+          "name": "020-use.t"
+        },
+        {
+          "name": "070-comment-here-doc.t",
+          "type": "file"
+        },
+        {
+          "type": "file",
+          "name": "060-interpolation.t"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "name": "README.md"
+    },
+    {
+      "type": "file",
+      "name": "Documentation.md"
+    },
+    {
+      "name": "lib",
+      "children": [
+        {
+          "name": "Ujumla.pm",
+          "type": "file"
+        }
+      ],
+      "type": "directory",
+      "purpose": null
+    },
+    {
+      "name": "META6.json",
+      "type": "file"
+    },
+    {
+      "type": "file",
+      "name": "Changes"
+    },
+    {
+      "name": "LICENCE",
+      "type": "file"
+    }
+  ]
+}
