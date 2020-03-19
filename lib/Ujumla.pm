@@ -219,7 +219,6 @@ class Ujumla {
     }
 
     class FileHelper {
-        #| This is the user-visible path
         has Str @.search-path;
 
         has IO::Path @.full-search-path;
