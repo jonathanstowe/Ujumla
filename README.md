@@ -2,9 +2,11 @@
 
 Read Apache/Config-General config files in Raku
 
+![Build Status](https://github.com/jonathanstowe/Ujumla/workflows/CI/badge.svg)
+
 ## Synopsis
 
-```perl6
+```raku
 
 use Ujumla;
 
@@ -28,13 +30,12 @@ This module aims to be able to read those configuration files that can be read
 by the Perl 5 module [Config::General](https://metacpan.org/release/Config-General)
 which in itself supports a superset of the [Apache httpd configuration syntax](https://httpd.apache.org/docs/2.4/configuring.html#syntax).
 
-I haven't named it ```Config::General``` because I wouldn't want to take the name from someone who might
+I haven't named it `Config::General` because I wouldn't want to take the name from someone who might
 be able to do better and because I don't want to raise the expectation that this is a *port* of the Perl 5
 module - the interface and options are likely to differ wildly from that module.  It is instead named for
 the first search result for *"Swahili for General"*.
 
 You can find the fuller documentation [here](Documentation.md).
-
 
 ## Installation
 
@@ -59,4 +60,4 @@ you think it should parse but doesn't a failing test case would be much apprecia
 
 This is free software please see the [LICENCE](LICENCE) file.
 
-© Jonathan Stowe 2020
+© Jonathan Stowe 2020 - 2021

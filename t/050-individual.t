@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 use v6;
 
@@ -28,4 +28,4 @@ for $*PROGRAM.parent.add('data').dir( test => /^cfg/ ) -> $d {
 
 done-testing;
 
-# vim: ft=perl6
+# vim: ft=raku

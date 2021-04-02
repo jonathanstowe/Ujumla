@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 use v6;
 
@@ -15,4 +15,4 @@ is $config.get-item('bar'), 'blam', 'included item';
 is $config.get-item('baz'), 'bar/included', "item with the interpolated item from included interpolated";
 
 done-testing();
-# vim: ft=perl6
+# vim: ft=raku
