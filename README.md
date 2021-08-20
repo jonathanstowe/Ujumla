@@ -16,7 +16,7 @@ name "something or other"
 <Section>
    section-name  whatever
 </Section>
-EIEO
+EIEIO
 
 say $config.get-item('name'); # "something or other"
 say $config.get-item('Section', 'section-name'); # "whatever"
