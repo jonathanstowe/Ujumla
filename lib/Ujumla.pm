@@ -95,7 +95,7 @@ Further configuration files can be included into the current one by use of a spe
 
     <<include included-file.cfg>>
 
-=end code 
+=end code
 
 The bare C<include> key as found in Apache configuration does B<not> work.
 
@@ -107,7 +107,7 @@ similarly the previously defined keys are available for interpolation in the inc
 
 =head3 new
 
-    method new(Str :$config-test, :$config-file, Str :@search-path, :%initial-variables, Bool :$include-env = False, Ujumla::FileHelper :$file-helper)
+    method new(Str :$config-text, :$config-file, Str :@search-path, :%initial-variables, Bool :$include-env = False, Ujumla::FileHelper :$file-helper)
 
 Creates a new C<Ujumla> object, the configuration text can be supplied as C<:$config-text> or read from C<:$config-file> which can either be an absolute
 path or found in the list of directories specified by C<:@search-path> (but see the description of C<Ujumla::FileHelper> below.)  C<:%initial-variables>
@@ -157,7 +157,7 @@ can work with them as appropriate.
     method merge(Ujumla::Config $config)
 
 This is not delegated, so needs to be called on the config object.  This is the method that underlies the inclusion mechanism
-but is exposed if you want to implement some more complicated inclusion logic, say deciding on which configuration file to 
+but is exposed if you want to implement some more complicated inclusion logic, say deciding on which configuration file to
 include based on inputs that are not available until runtime.
 
 =head2 Ujumla::FileHelper
@@ -204,7 +204,7 @@ group writeable.
 This returns the text of the configuration given C<$file-name> it will call C<resolve-file> to locate the file, you may want to over-ride
 this if, for example, you have encrypted or compressed your file, but you may want to call C<callsame> to get the text before further
 processing.
-    
+
 
 =end pod
 
