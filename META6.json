@@ -1,32 +1,35 @@
 {
+  "support": {
+    "source": "https://github.com/jonathanstowe/Ujumla.git",
+    "email": "jns+gh@gellyfish.co.uk",
+    "bugtracker": "https://github.com/jonathanstowe/Ujumla/issues"
+  },
   "name": "Ujumla",
-  "version": "0.0.3",
-  "auth": "github:jonathanstowe",
-  "api" : "1.0",
-  "description": "Read Config::General/Apache style configuration",
+  "build-depends": [
+  ],
+  "license": "Artistic-2.0",
+  "version": "0.0.4",
   "source-url": "https://github.com/jonathanstowe/Ujumla.git",
+  "meta-version": "1",
+  "depends": [
+  ],
+  "api": "1.0",
+  "test-depends": [
+  ],
+  "description": "Read Config::General/Apache style configuration",
+  "raku": "6.*",
+  "authors": [
+    "Jonathan Stowe <jns+gh@gellyfish.co.uk>"
+  ],
+  "auth": "zef:jonathanstowe",
   "tags": [
     "config",
     "Config::General",
     "apache"
   ],
-  "license": "Artistic-2.0",
-  "provides": {
-    "Ujumla" : "lib/Ujumla.pm"
-  },
-  "depends": [ ],
-  "test-depends": [ ],
-  "build-depends": [ ],
-  "support": {
-    "source": "https://github.com/jonathanstowe/Ujumla.git",
-    "bugtracker": "https://github.com/jonathanstowe/Ujumla/issues",
-    "email": "jns+gh@gellyfish.co.uk"
-  },
-  "perl": "6.*",
-  "raku": "6.*",
-  "authors": [
-    "Jonathan Stowe <jns+gh@gellyfish.co.uk>"
+  "resources": [
   ],
-  "resources": [ ],
-  "meta-version": "1"
+  "provides": {
+    "Ujumla": "lib/Ujumla.pm"
+  }
 }
