@@ -179,7 +179,7 @@
       "name": "lib",
       "children": [
         {
-          "name": "Ujumla.pm",
+          "name": "Ujumla.rakumod",
           "type": "file"
         }
       ],

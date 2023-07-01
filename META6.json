@@ -8,7 +8,7 @@
   "build-depends": [
   ],
   "license": "Artistic-2.0",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "source-url": "https://github.com/jonathanstowe/Ujumla.git",
   "meta-version": "1",
   "depends": [
@@ -30,6 +30,6 @@
   "resources": [
   ],
   "provides": {
-    "Ujumla": "lib/Ujumla.pm"
+    "Ujumla": "lib/Ujumla.rakumod"
   }
 }
